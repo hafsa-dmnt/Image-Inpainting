@@ -19,3 +19,5 @@ Attention cependant, en dézippant, beaucoup d'images étaient corrompues sur RO
 - OpenCV
 - scipy
 - tensorboardX
+
+Pour avoir tous les packages, j'ai créé un environnement virtuel ; c'était la solution la plus simple.
