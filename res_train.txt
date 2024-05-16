@@ -1,0 +1,436 @@
+------------ Options -------------
+D_max_iters: 5
+batch_size: 8
+checkpoint_dir: ./checkpoints
+d_cnum: 64
+data_file: CelebA_txt/train.txt
+dataset: celeba
+dataset_path: CelebAMask-HQ/CelebA-HQ-img
+date_str: 20240515-150810
+epochs: 40
+g_cnum: 32
+gpu_ids: ['0']
+img_shapes: [256, 256, 3]
+lambda_adv: 0.001
+lambda_ae: 1.2
+lambda_gp: 10
+lambda_mrf: 0.05
+lambda_rec: 1.4
+load_model_dir: 
+lr: 0.0002
+margins: [0, 0]
+mask_shapes: [128, 128]
+mask_type: rect
+max_delta_shapes: [32, 32]
+model_folder: ./checkpoints/20240515-150810_DMFN_randmask-rect
+model_name: DMFN
+padding: SAME
+phase: train
+pretrain_network: False
+random_crop: True
+random_mask: True
+random_seed: False
+spectral_norm: True
+train_spe: 1000
+vgg19_path: vgg19_weights/imagenet-vgg-verydeep-19.mat
+viz_steps: 5
+-------------- End ----------------
+loading data..
+data loaded..
+configuring model..
+initialize network with normal
+initialize network with normal
+---------- Networks initialized -------------
+DFBN(
+  (basemodel): Sequential(
+    (0): Conv2d(4, 64, kernel_size=(5, 5), stride=(1, 1), padding=(2, 2))
+    (1): Conv2d(64, 128, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (2): ReLU()
+    (3): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    (4): Conv2d(128, 128, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (5): ReLU()
+    (6): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    (7): Conv2d(128, 256, kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+    (8): ReLU()
+    (9): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    (10): Sequential(
+      (0): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (1): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (2): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (3): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (4): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (5): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (6): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (7): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (8): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (9): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (10): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (11): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (12): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (13): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (14): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (15): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (16): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (17): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (18): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (19): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (20): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (21): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (22): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+      (23): DMFB(
+        (conv_3): Conv2d(256, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        (conv_3_sets): ModuleList(
+          (0-3): 4 x Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+        )
+        (conv_3_2): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(2, 2), dilation=(2, 2))
+        (conv_3_4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(4, 4), dilation=(4, 4))
+        (conv_3_8): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1), padding=(8, 8), dilation=(8, 8))
+        (act_fn): Sequential(
+          (0): ReLU()
+          (1): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+        )
+        (conv_1): Conv2d(256, 256, kernel_size=(1, 1), stride=(1, 1))
+        (norm): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+      )
+    )
+    (11): Conv2d(256, 256, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (12): ReLU()
+    (13): InstanceNorm2d(256, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    (14): ConvTranspose2d(256, 128, kernel_size=(4, 4), stride=(2, 2), padding=(1, 1))
+    (15): InstanceNorm2d(128, eps=1e-05, momentum=0.1, affine=False, track_running_stats=False)
+    (16): Conv2d(128, 64, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (17): Upsample(scale_factor=2.0, mode='bilinear')
+    (18): Conv2d(64, 3, kernel_size=(3, 3), stride=(1, 1), padding=(1, 1))
+    (19): Tanh()
+  )
+)
+[Network DFBN] Total number of parameters : 13.036 M
+-----------------------------------------------
+model setting up..
+training initializing..
+[1,     5] G_loss: 29.9786 (vgg: 27.4599, ae: 0.4377, adv: 3.2392, fm_dis: 0.3968, vgg_align: 0.42, vgg_fm: 0.94, vgg_guided: 0.14 ), D_loss: 0.0000, LR : 0.000200
+[1,    10] G_loss: 23.2521 (vgg: 20.5705, ae: 0.4383, adv: 12.0928, fm_dis: 0.3761, vgg_align: 0.28, vgg_fm: 0.72, vgg_guided: 0.09 ), D_loss: 0.0000, LR : 0.000200
+[1,    15] G_loss: 22.6162 (vgg: 19.9659, ae: 0.4211, adv: 15.7372, fm_dis: 0.3514, vgg_align: 0.38, vgg_fm: 0.68, vgg_guided: 0.11 ), D_loss: 0.0000, LR : 0.000200
+[1,    20] G_loss: 19.3671 (vgg: 16.9784, ae: 0.4342, adv: 6.6823, fm_dis: 0.3508, vgg_align: 0.31, vgg_fm: 0.57, vgg_guided: 0.10 ), D_loss: 0.0000, LR : 0.000200
